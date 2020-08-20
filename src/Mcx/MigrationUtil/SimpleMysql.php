@@ -28,7 +28,7 @@ class SimpleMysql
     public function __construct($host=null, $dbname=null, $username=null, $password=null, $charset = 'utf8')
     {
         if($host && $dbname && $username) {
-            $this->connect($host=null, $dbname, $username, $password, $charset);
+            $this->connect($host, $dbname, $username, $password, $charset);
         }
     }
 
