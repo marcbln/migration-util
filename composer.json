@@ -1,0 +1,32 @@
+{
+    "name": "marcbln/migration-util",
+    "type": "library",
+    "description": "migration utilities for php",
+    "keywords": [
+        "util",
+        "utility",
+        "pdo",
+        "mysql"
+    ],
+    "authors": [
+        {
+            "name": "Marc Christenfeldt",
+            "email": "github-2020@christenfeldt-edv.de",
+            "homepage": "http://christenfeldt-edv.de",
+            "role": "Developer"
+        }
+    ],
+    "homepage": "https://github.com/marcbln/migration-util",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "require": {
+        "ext-pdo": "*"
+    }
+}
+
+
+
