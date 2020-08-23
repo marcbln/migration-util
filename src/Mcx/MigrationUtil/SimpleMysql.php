@@ -3,6 +3,9 @@
 namespace Mcx\MigrationUtil;
 
 
+use WhyooOs\Util\UtilDebug;
+use WhyooOs\Util\UtilDict;
+
 /**
  * wrapper around pdo-mysql for some quick'n'easy access to the database
  *
@@ -74,6 +77,39 @@ class SimpleMysql
     {
         return $this->query($query, $args)->fetchAll();
 
+    }
+
+    /**
+     * @param string $tbl
+     * @param array $criteria eg ['uid' => 123]
+     * @param array $update
+     */
+    public function update(string $tbl, array $criteria, array $update): void
+    {
+        if(empty($update)) {
+            return;
+        }
+        
+        // ---- construct SET part of query
+        $arrSet = [];
+        foreach($update as $key => $value) {
+            $arrSet[] = "$key = :set_{$key}";
+        }
+        $set = implode(', ', $arrSet);
+                
+        // ---- construct WHERE part of query
+        $arrWhere = [];
+        foreach($criteria as $key => $value) {
+            $arrWhere[] = "$key = :where_{$key}"; 
+        }
+        $where = empty($arrWhere) ? '1=1' : implode(' AND ', $arrWhere);
+        
+        
+        $query = "UPDATE `{$tbl}` SET {$set} WHERE {$where}";
+
+        $params = array_merge(UtilDict::prependToKeys($criteria, 'where_'), UtilDict::prependToKeys($update, 'set_'));
+
+        $this->query($query, $params);
     }
 }
 
